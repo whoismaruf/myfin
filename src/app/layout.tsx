@@ -11,7 +11,6 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
-  userScalable: false,
   themeColor: '#090d16',
 };
 
@@ -24,7 +23,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className="bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-emerald-500 selection:text-white">
         <SessionProvider>
-          <div className="mx-auto min-h-screen max-w-lg bg-slate-900 border-x border-slate-800/60 shadow-2xl relative flex flex-col">
+          <div className="min-h-screen bg-slate-950 flex flex-col">
             {children}
           </div>
         </SessionProvider>

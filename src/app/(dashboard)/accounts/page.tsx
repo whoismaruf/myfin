@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
 import { Plus, Wallet, Lock, TrendingUp, CheckCircle, Scale, X } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils/money';
 
@@ -104,7 +103,6 @@ export default function AccountsPage() {
       icon: Wallet,
       desc: 'Checking, digital wallets, and physical cash',
       color: 'text-emerald-400',
-      badgeBg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
     },
     {
       key: 'LOCKED',
@@ -112,7 +110,6 @@ export default function AccountsPage() {
       icon: Lock,
       desc: 'Fixed deposits (FDR), DPS, and certificates',
       color: 'text-blue-400',
-      badgeBg: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
     },
     {
       key: 'GROWTH',
@@ -120,21 +117,20 @@ export default function AccountsPage() {
       icon: TrendingUp,
       desc: 'Equities, mutual funds, and assets',
       color: 'text-purple-400',
-      badgeBg: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
     },
   ];
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       {/* Top Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-lg font-bold text-white">Accounts & Reserves</h1>
-          <p className="text-[11px] text-slate-400">Multi-tier liquidity management</p>
+          <h1 className="text-xl font-bold text-white tracking-tight">Accounts & Reserves</h1>
+          <p className="text-xs text-slate-400 mt-0.5">Multi-tier liquidity management and audit reconciliation</p>
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="py-2 px-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold rounded-xl text-xs flex items-center gap-1.5 transition-all shadow-md shadow-emerald-500/20 active:scale-95"
+          className="py-2.5 px-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-xs flex items-center gap-2 transition-all shadow-md shadow-emerald-500/20 active:scale-95"
         >
           <Plus className="w-4 h-4" />
           <span>Add Account</span>
@@ -143,12 +139,12 @@ export default function AccountsPage() {
 
       {/* Tier Sections */}
       {loading ? (
-        <div className="space-y-4 animate-pulse">
-          <div className="h-32 bg-slate-800/40 rounded-3xl" />
-          <div className="h-32 bg-slate-800/40 rounded-3xl" />
+        <div className="space-y-6 animate-pulse">
+          <div className="h-40 bg-slate-800/40 rounded-3xl" />
+          <div className="h-40 bg-slate-800/40 rounded-3xl" />
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-8">
           {tiers.map((tier) => {
             const tierAccounts = accounts.filter((a) => a.tier === tier.key);
             const tierSubtotal = tierAccounts.reduce(
@@ -159,48 +155,46 @@ export default function AccountsPage() {
             const Icon = tier.icon;
 
             return (
-              <div key={tier.key} className="space-y-3">
+              <div key={tier.key} className="space-y-3.5">
                 <div className="flex items-center justify-between px-1">
-                  <div className="flex items-center gap-2">
-                    <Icon className={`w-4 h-4 ${tier.color}`} />
-                    <span className="text-xs font-bold text-white">{tier.label}</span>
+                  <div className="flex items-center gap-2.5">
+                    <Icon className={`w-5 h-5 ${tier.color}`} />
+                    <div>
+                      <span className="text-sm font-bold text-white">{tier.label}</span>
+                      <span className="text-[11px] text-slate-500 hidden sm:inline ml-2">({tier.desc})</span>
+                    </div>
                   </div>
-                  <span className="text-xs font-bold text-slate-200">
+                  <span className="text-sm font-black text-slate-100">
                     {formatCurrency(tierSubtotal, currency)}
                   </span>
                 </div>
 
                 {tierAccounts.length === 0 ? (
-                  <div className="p-4 rounded-2xl bg-slate-800/30 border border-slate-700/40 text-center text-xs text-slate-500">
-                    No accounts in this tier.
+                  <div className="p-6 rounded-2xl bg-slate-800/20 border border-slate-800 text-center text-xs text-slate-500">
+                    No accounts recorded in this tier yet.
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 gap-2.5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {tierAccounts.map((acc) => (
                       <div
                         key={acc.id}
-                        className="p-4 bg-slate-800/50 border border-slate-700/60 rounded-2xl flex items-center justify-between hover:bg-slate-800/70 transition-colors"
+                        className="p-4 bg-slate-800/50 border border-slate-700/60 rounded-3xl flex flex-col justify-between hover:bg-slate-800/70 transition-all hover:border-slate-600 shadow-md"
                       >
-                        <div>
-                          <div className="font-semibold text-white text-xs flex items-center gap-2">
-                            <span>{acc.name}</span>
-                            <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-slate-700 text-slate-300">
-                              {acc.subtype}
-                            </span>
-                          </div>
-                          {acc.institution && (
-                            <div className="text-[10px] text-slate-400 mt-0.5">
-                              {acc.institution}
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="flex items-center gap-3">
-                          <div className="text-right">
+                        <div className="flex items-start justify-between gap-2 mb-3">
+                          <div>
                             <div className="font-bold text-white text-sm">
-                              {formatCurrency(acc.currentBalance, acc.currency)}
+                              {acc.name}
                             </div>
-                            <div className="text-[9px] text-slate-500">Ledger Balance</div>
+                            <div className="flex items-center gap-2 mt-1">
+                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-700/70 text-slate-300 font-medium">
+                                {acc.subtype}
+                              </span>
+                              {acc.institution && (
+                                <span className="text-[11px] text-slate-400 truncate max-w-[120px]">
+                                  {acc.institution}
+                                </span>
+                              )}
+                            </div>
                           </div>
 
                           <button
@@ -209,11 +203,18 @@ export default function AccountsPage() {
                               setStatementBalance(acc.currentBalance.toString());
                               setReconcileResult(null);
                             }}
-                            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 hover:text-emerald-400 transition-colors"
-                            title="Reconcile with bank statement"
+                            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 hover:text-emerald-400 transition-colors shrink-0"
+                            title="Audit statement balance"
                           >
-                            <Scale className="w-3.5 h-3.5" />
+                            <Scale className="w-4 h-4" />
                           </button>
+                        </div>
+
+                        <div className="pt-3 border-t border-slate-700/40 flex items-end justify-between">
+                          <span className="text-[10px] text-slate-400 font-medium">Current Balance</span>
+                          <span className="font-black text-white text-base">
+                            {formatCurrency(acc.currentBalance, acc.currency)}
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -225,15 +226,15 @@ export default function AccountsPage() {
         </div>
       )}
 
-      {/* Add Account Bottom Sheet Modal */}
+      {/* Add Account Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex flex-col justify-end">
+        <div className="fixed inset-0 z-50 flex flex-col justify-end md:justify-center md:items-center p-0 md:p-4">
           <div
             className="fixed inset-0 bg-black/70 backdrop-blur-sm"
             onClick={() => setShowAddModal(false)}
           />
-          <div className="relative z-50 bg-slate-900 border-t border-slate-800 rounded-t-3xl p-5 shadow-2xl max-w-lg mx-auto w-full space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+          <div className="relative z-50 bg-slate-900 border border-slate-800 rounded-t-3xl md:rounded-3xl p-6 shadow-2xl max-w-lg mx-auto w-full space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <h3 className="text-sm font-semibold text-white">Create New Account</h3>
               <button
                 onClick={() => setShowAddModal(false)}
@@ -243,7 +244,7 @@ export default function AccountsPage() {
               </button>
             </div>
 
-            <form onSubmit={handleAddAccount} className="space-y-3">
+            <form onSubmit={handleAddAccount} className="space-y-3.5 text-xs">
               <div>
                 <label className="block text-[11px] font-medium text-slate-400 mb-1">Account Name</label>
                 <input
@@ -252,17 +253,17 @@ export default function AccountsPage() {
                   placeholder="e.g. Standard Chartered Checking"
                   value={accName}
                   onChange={(e) => setAccName(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[11px] font-medium text-slate-400 mb-1">Liquidity Tier</label>
                   <select
                     value={accTier}
                     onChange={(e) => setAccTier(e.target.value as any)}
-                    className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
                   >
                     <option value="LIQUID">Liquid (Cash/Wallet)</option>
                     <option value="LOCKED">Locked (FDR/DPS)</option>
@@ -275,7 +276,7 @@ export default function AccountsPage() {
                   <select
                     value={accSubtype}
                     onChange={(e) => setAccSubtype(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
                   >
                     <option value="CHECKING">Checking</option>
                     <option value="SAVINGS">Savings</option>
@@ -296,7 +297,7 @@ export default function AccountsPage() {
                   placeholder="e.g. BRAC Bank, HSBC, bKash"
                   value={institution}
                   onChange={(e) => setInstitution(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
@@ -308,14 +309,14 @@ export default function AccountsPage() {
                   placeholder="0.00"
                   value={openingBalance}
                   onChange={(e) => setOpeningBalance(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-sm font-bold text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-base font-bold text-white focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={formLoading || !accName}
-                className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-semibold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/20 active:scale-95"
+                className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/20 active:scale-95 mt-2"
               >
                 {formLoading ? 'Creating...' : 'Save Account'}
               </button>
@@ -326,13 +327,13 @@ export default function AccountsPage() {
 
       {/* Statement Reconciliation Modal */}
       {reconcileAccount && (
-        <div className="fixed inset-0 z-50 flex flex-col justify-end">
+        <div className="fixed inset-0 z-50 flex flex-col justify-end md:justify-center md:items-center p-0 md:p-4">
           <div
             className="fixed inset-0 bg-black/70 backdrop-blur-sm"
             onClick={() => setReconcileAccount(null)}
           />
-          <div className="relative z-50 bg-slate-900 border-t border-slate-800 rounded-t-3xl p-5 shadow-2xl max-w-lg mx-auto w-full space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+          <div className="relative z-50 bg-slate-900 border border-slate-800 rounded-t-3xl md:rounded-3xl p-6 shadow-2xl max-w-lg mx-auto w-full space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <div>
                 <h3 className="text-sm font-semibold text-white">Reconcile Account</h3>
                 <p className="text-[11px] text-slate-400">{reconcileAccount.name}</p>
@@ -370,8 +371,8 @@ export default function AccountsPage() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleReconcile} className="space-y-3">
-                <div className="p-3 bg-slate-800/60 rounded-xl border border-slate-700/60 text-xs flex items-center justify-between">
+              <form onSubmit={handleReconcile} className="space-y-3.5 text-xs">
+                <div className="p-3 bg-slate-800/60 rounded-xl border border-slate-700/60 flex items-center justify-between">
                   <span className="text-slate-400">Current App Ledger:</span>
                   <span className="font-bold text-white">
                     {formatCurrency(reconcileAccount.currentBalance, reconcileAccount.currency)}
@@ -388,7 +389,7 @@ export default function AccountsPage() {
                     required
                     value={statementBalance}
                     onChange={(e) => setStatementBalance(e.target.value)}
-                    className="w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-base font-bold text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-base font-bold text-white focus:outline-none focus:border-emerald-500"
                   />
                 </div>
 
@@ -401,14 +402,14 @@ export default function AccountsPage() {
                     placeholder="e.g. Audited against monthly PDF statement"
                     value={reconcileNotes}
                     onChange={(e) => setReconcileNotes(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full px-3.5 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={formLoading || !statementBalance}
-                  className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-semibold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/20 active:scale-95"
+                  className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/20 active:scale-95"
                 >
                   {formLoading ? 'Auditing...' : 'Confirm Reconciliation'}
                 </button>

@@ -17,49 +17,49 @@ export default function LiquidityStrip({
 }: LiquidityStripProps) {
   const cards = [
     {
-      title: 'Liquid Cash',
+      title: 'Liquid Reserves',
       amount: totalLiquid,
       icon: Wallet,
       color: 'text-emerald-400',
       bg: 'bg-emerald-500/10 border-emerald-500/20',
-      tag: 'Ready to spend',
+      tag: 'Checking & Cash',
     },
     {
-      title: 'Locked Term',
+      title: 'Locked Capital',
       amount: totalLocked,
       icon: Lock,
       color: 'text-blue-400',
       bg: 'bg-blue-500/10 border-blue-500/20',
-      tag: 'FDR & DPS',
+      tag: 'FDR & Term Deposits',
     },
     {
-      title: 'Invested',
+      title: 'Invested Assets',
       amount: totalInvested,
       icon: TrendingUp,
       color: 'text-purple-400',
       bg: 'bg-purple-500/10 border-purple-500/20',
-      tag: 'Equities & Assets',
+      tag: 'Equities & Holdings',
     },
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-2.5">
+    <div className="grid grid-cols-3 lg:grid-cols-1 gap-2.5 h-full">
       {cards.map((card) => {
         const Icon = card.icon;
         return (
           <div
             key={card.title}
-            className={`p-3 rounded-2xl border ${card.bg} flex flex-col justify-between`}
+            className={`p-3.5 rounded-2xl border ${card.bg} flex flex-col justify-between`}
           >
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] font-medium text-slate-400">{card.title}</span>
-              <Icon className={`w-3.5 h-3.5 ${card.color}`} />
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[11px] font-semibold text-slate-300">{card.title}</span>
+              <Icon className={`w-4 h-4 ${card.color}`} />
             </div>
             <div>
-              <div className="text-xs font-bold text-white truncate">
+              <div className="text-sm font-black text-white truncate">
                 {formatCurrency(card.amount, currency)}
               </div>
-              <div className="text-[9px] text-slate-500 truncate mt-0.5">{card.tag}</div>
+              <div className="text-[10px] text-slate-400 truncate mt-0.5">{card.tag}</div>
             </div>
           </div>
         );

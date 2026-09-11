@@ -181,7 +181,7 @@ export default function QuickAddModal({ isOpen, onClose, onSuccess }: QuickAddMo
   const filteredCategories = categories.filter((c) => c.type === txType);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col justify-end">
+    <div className="fixed inset-0 z-50 flex flex-col justify-end md:justify-center md:items-center md:p-4">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
@@ -189,7 +189,7 @@ export default function QuickAddModal({ isOpen, onClose, onSuccess }: QuickAddMo
       />
 
       {/* Sheet Modal */}
-      <div className="relative z-50 bg-slate-900 border-t border-slate-800 rounded-t-3xl max-w-lg mx-auto w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-200">
+      <div className="relative z-50 bg-slate-900 border-t border-slate-800 border border-slate-800 rounded-t-3xl md:rounded-3xl max-w-lg mx-auto w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-200">
         {/* Header with Mode Switcher */}
         <div className="p-4 border-b border-slate-800 space-y-3">
           <div className="flex items-center justify-between">

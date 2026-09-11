@@ -39,7 +39,7 @@ export default function BottomNav({ onOpenQuickAdd }: BottomNavProps) {
     pathname.startsWith('/settings');
 
   return (
-    <>
+    <div className="md:hidden">
       {/* More Menu Bottom Drawer */}
       {showMoreMenu && (
         <div className="fixed inset-0 z-40 flex flex-col justify-end">
@@ -206,6 +206,6 @@ export default function BottomNav({ onOpenQuickAdd }: BottomNavProps) {
           </button>
         </div>
       </nav>
-    </>
+    </div>
   );
 }

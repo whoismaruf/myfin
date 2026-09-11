@@ -22,6 +22,7 @@ export default function QuickAddModal({ isOpen, onClose, onSuccess }: QuickAddMo
   const [amount, setAmount] = useState('');
   const [accountId, setAccountId] = useState('');
   const [categoryId, setCategoryId] = useState('');
+  const [subcategoryId, setSubcategoryId] = useState<string | null>(null);
   const [description, setDescription] = useState('');
   const [notes, setNotes] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
@@ -81,7 +82,7 @@ export default function QuickAddModal({ isOpen, onClose, onSuccess }: QuickAddMo
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           accountId,
-          categoryId: categoryId || null,
+          categoryId: subcategoryId || categoryId || null,
           type: txType,
           amount: parseFloat(amount),
           date: new Date(date).toISOString(),
@@ -178,7 +179,8 @@ export default function QuickAddModal({ isOpen, onClose, onSuccess }: QuickAddMo
     setToAccountId(temp);
   };
 
-  const filteredCategories = categories.filter((c) => c.type === txType);
+  const rootCategories = categories.filter((c) => c.type === txType && !c.parentId);
+  const childSubcategories = categories.filter((c) => c.parentId === categoryId);
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col justify-end md:justify-center md:items-center md:p-4">
@@ -312,17 +314,20 @@ export default function QuickAddModal({ isOpen, onClose, onSuccess }: QuickAddMo
                 </select>
               </div>
 
-              {/* Category Picker */}
+              {/* Category & Subcategory Picker */}
               <div>
                 <label className="block text-[11px] font-medium text-slate-400 mb-1.5">Category</label>
                 <div className="grid grid-cols-3 gap-2 max-h-36 overflow-y-auto pr-1">
-                  {filteredCategories.map((cat) => {
+                  {rootCategories.map((cat) => {
                     const isSelected = categoryId === cat.id;
                     return (
                       <button
                         key={cat.id}
                         type="button"
-                        onClick={() => setCategoryId(cat.id)}
+                        onClick={() => {
+                          setCategoryId(cat.id);
+                          setSubcategoryId(null);
+                        }}
                         className={`p-2 rounded-xl border flex items-center gap-2 text-left transition-all ${
                           isSelected
                             ? 'bg-emerald-500/10 border-emerald-500 text-emerald-300'
@@ -335,6 +340,49 @@ export default function QuickAddModal({ isOpen, onClose, onSuccess }: QuickAddMo
                     );
                   })}
                 </div>
+
+                {/* Subcategories (if available under selected category) */}
+                {childSubcategories.length > 0 && (
+                  <div className="mt-2.5 pt-2 border-t border-slate-800">
+                    <label className="block text-[10px] font-medium text-slate-400 mb-1.5 uppercase tracking-wider">
+                      Subcategory (Optional)
+                    </label>
+                    <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
+                      <button
+                        type="button"
+                        onClick={() => setSubcategoryId(null)}
+                        className={`px-2 py-1 rounded-lg text-xs font-medium border transition-all ${
+                          subcategoryId === null
+                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 font-semibold'
+                            : 'bg-slate-800 text-slate-400 border-slate-700/60 hover:text-slate-200'
+                        }`}
+                      >
+                        General / All
+                      </button>
+                      {childSubcategories.map((sub) => {
+                        const isSubSelected = subcategoryId === sub.id;
+                        return (
+                          <button
+                            key={sub.id}
+                            type="button"
+                            onClick={() => setSubcategoryId(sub.id)}
+                            className={`px-2 py-1 rounded-lg text-xs font-medium border flex items-center gap-1.5 transition-all ${
+                              isSubSelected
+                                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 font-semibold'
+                                : 'bg-slate-800 text-slate-400 border-slate-700/60 hover:text-slate-200'
+                            }`}
+                          >
+                            <span
+                              className="w-1.5 h-1.5 rounded-full shrink-0"
+                              style={{ backgroundColor: sub.color || '#10B981' }}
+                            />
+                            <span className="truncate">{sub.name}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Description & Date */}

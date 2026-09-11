@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Plus, Wallet, Lock, TrendingUp, CheckCircle, Scale, X } from 'lucide-react';
+import Link from 'next/link';
+import { Plus, Wallet, Lock, TrendingUp, CheckCircle, Scale, X, CreditCard } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils/money';
 
 export default function AccountsPage() {
@@ -210,7 +211,44 @@ export default function AccountsPage() {
                           </button>
                         </div>
 
-                        <div className="pt-3 border-t border-slate-700/40 flex items-end justify-between">
+                        {/* Linked Cards under this account */}
+                        {acc.cards && acc.cards.length > 0 ? (
+                          <div className="my-2 pt-2 border-t border-slate-700/40 space-y-1">
+                            <div className="text-[10px] text-slate-400 font-medium flex items-center justify-between">
+                              <span className="flex items-center gap-1">
+                                <CreditCard className="w-3 h-3 text-slate-400" />
+                                <span>Cards ({acc.cards.length})</span>
+                              </span>
+                              <Link href="/cards" className="text-[10px] text-emerald-400 hover:underline">
+                                View &rarr;
+                              </Link>
+                            </div>
+                            <div className="flex flex-wrap gap-1">
+                              {acc.cards.map((c: any) => (
+                                <span
+                                  key={c.id}
+                                  className={`text-[9px] px-1.5 py-0.5 rounded border font-mono flex items-center gap-1 ${
+                                    c.cardType === 'CREDIT'
+                                      ? 'bg-rose-500/10 text-rose-300 border-rose-500/20'
+                                      : 'bg-teal-500/10 text-teal-300 border-teal-500/20'
+                                  }`}
+                                >
+                                  <span>{c.network}</span>
+                                  <span>•••• {c.cardNumberLast4}</span>
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="my-2 pt-2 border-t border-slate-700/40 flex items-center justify-between text-[10px] text-slate-500">
+                            <span>No cards linked</span>
+                            <Link href="/cards" className="text-slate-400 hover:text-emerald-400">
+                              + Add Card
+                            </Link>
+                          </div>
+                        )}
+
+                        <div className="pt-2 border-t border-slate-700/40 flex items-end justify-between">
                           <span className="text-[10px] text-slate-400 font-medium">Current Balance</span>
                           <span className="font-black text-white text-base">
                             {formatCurrency(acc.currentBalance, acc.currency)}

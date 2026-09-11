@@ -26,6 +26,19 @@ export async function GET(req: Request) {
     include: {
       fixedDeposit: true,
       investmentPosition: true,
+      cards: {
+        where: { isActive: true },
+        select: {
+          id: true,
+          cardName: true,
+          cardType: true,
+          network: true,
+          cardNumberLast4: true,
+          creditLimit: true,
+          currentBalance: true,
+          color: true,
+        },
+      },
     },
   });
 
@@ -34,6 +47,11 @@ export async function GET(req: Request) {
     institution: decrypt(acc.institution),
     currentBalance: Number(acc.currentBalance),
     openingBalance: Number(acc.openingBalance),
+    cards: (acc.cards || []).map((c) => ({
+      ...c,
+      creditLimit: c.creditLimit ? Number(c.creditLimit) : null,
+      currentBalance: c.currentBalance ? Number(c.currentBalance) : 0,
+    })),
   }));
 
   return NextResponse.json({ accounts: decrypted });

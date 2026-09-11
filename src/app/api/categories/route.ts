@@ -12,10 +12,19 @@ export async function GET() {
 
   const categories = await prisma.category.findMany({
     where: { userId: user.id },
+    include: {
+      children: {
+        orderBy: { name: 'asc' },
+      },
+      parent: true,
+    },
     orderBy: { name: 'asc' },
   });
 
-  return NextResponse.json({ categories });
+  // Also build hierarchical tree (top-level categories with subcategories)
+  const tree = categories.filter((cat) => !cat.parentId);
+
+  return NextResponse.json({ categories, tree });
 }
 
 export async function POST(req: Request) {

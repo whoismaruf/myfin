@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import prisma from '@/lib/prisma';
 import { onboardingSchema } from '@/lib/validators';
-import { DEFAULT_CATEGORIES } from '@/lib/defaults';
+import { seedUserCategories } from '@/lib/defaults';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
     // 3. Cryptographic salt & hash (12 rounds)
     const passwordHash = await bcrypt.hash(password, 12);
 
-    // 4. Atomic initialization of User, default categories, and starter accounts
+    // 4. Atomic initialization of User, default categories & subcategories, and starter accounts
     const result = await prisma.$transaction(async (tx) => {
       // Create owner user
       const user = await tx.user.create({
@@ -54,16 +54,8 @@ export async function POST(req: Request) {
         },
       });
 
-      // Seed starter categories
-      await tx.category.createMany({
-        data: DEFAULT_CATEGORIES.map((cat) => ({
-          userId: user.id,
-          name: cat.name,
-          type: cat.type,
-          icon: cat.icon,
-          color: cat.color,
-        })),
-      });
+      // Seed starter categories & subcategories
+      await seedUserCategories(user.id, tx);
 
       // Seed starter accounts (LIQUID tier)
       await tx.account.create({

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, ArrowDownRight, Clock, RefreshCw } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ArrowDownRight, Clock, RefreshCw, CreditCard } from 'lucide-react';
 import NetWorthCard from '@/components/dashboard/NetWorthCard';
 import LiquidityStrip from '@/components/dashboard/LiquidityStrip';
 import FDRAlertBanner from '@/components/dashboard/FDRAlertBanner';
@@ -18,23 +18,26 @@ export default function DashboardPage() {
   const [schedules, setSchedules] = useState<any[]>([]);
   const [recentTransactions, setRecentTransactions] = useState<any[]>([]);
   const [cashFlow, setCashFlow] = useState<any>(null);
+  const [cardsOverview, setCardsOverview] = useState<any>(null);
 
   const loadDashboardData = useCallback(async () => {
     try {
-      const [nwRes, fdrRes, recRes, txRes, cfRes] = await Promise.all([
+      const [nwRes, fdrRes, recRes, txRes, cfRes, cardsRes] = await Promise.all([
         fetch('/api/reports/net-worth'),
         fetch('/api/fixed-deposits'),
         fetch('/api/recurring'),
         fetch('/api/transactions?limit=8'),
         fetch('/api/reports/cash-flow'),
+        fetch('/api/cards'),
       ]);
 
-      const [nw, fdr, rec, tx, cf] = await Promise.all([
+      const [nw, fdr, rec, tx, cf, cardsData] = await Promise.all([
         nwRes.json(),
         fdrRes.json(),
         recRes.json(),
         txRes.json(),
         cfRes.json(),
+        cardsRes.json(),
       ]);
 
       setNetWorthData(nw);
@@ -42,6 +45,7 @@ export default function DashboardPage() {
       setSchedules(rec.schedules || []);
       setRecentTransactions(tx.transactions || []);
       setCashFlow(cf);
+      setCardsOverview(cardsData.overview || null);
     } catch (err) {
       console.error('Failed to load dashboard:', err);
     } finally {
@@ -103,6 +107,8 @@ export default function DashboardPage() {
               totalLiquid={netWorthData?.totalLiquid || 0}
               totalLocked={netWorthData?.totalLocked || 0}
               totalInvested={netWorthData?.totalInvested || 0}
+              grossAssets={netWorthData?.grossAssets}
+              totalCreditDebt={netWorthData?.totalCreditDebt || 0}
               currency={currency}
             />
           </div>
@@ -120,7 +126,46 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Row 2: FDR Maturity Alert (If any matures within 30 days) */}
+      {/* Row 2: Credit Debt Status Bar (if any credit cards registered) */}
+      {cardsOverview && cardsOverview.activeCardsCount > 0 && (
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center shrink-0 border border-rose-500/20">
+              <CreditCard className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-xs font-bold text-white flex items-center gap-2">
+                <span>Credit Card Debt:</span>
+                <span className="text-rose-400 font-black">
+                  {currency} {cardsOverview.totalCreditDebt.toLocaleString()}
+                </span>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full border font-semibold ${
+                  cardsOverview.overallUtilization > 50
+                    ? 'bg-rose-500/10 text-rose-400 border-rose-500/30'
+                    : cardsOverview.overallUtilization > 30
+                    ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                    : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                }`}>
+                  {cardsOverview.overallUtilization}% Utilized
+                </span>
+              </div>
+              <div className="text-[11px] text-slate-400 mt-0.5">
+                Available credit: {currency} {cardsOverview.totalAvailableCredit.toLocaleString()} of {currency} {cardsOverview.totalCreditLimit.toLocaleString()}
+              </div>
+            </div>
+          </div>
+
+          <Link
+            href="/cards"
+            className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 border border-slate-700 transition-colors shrink-0"
+          >
+            <span>Manage Cards & Debt</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+      )}
+
+      {/* Row 3: FDR Maturity Alert (If any matures within 30 days) */}
       <FDRAlertBanner fixedDeposits={fixedDeposits} currency={currency} />
 
       {/* Row 3: Cash Flow & Upcoming Commitments (2-Column on Desktop) */}

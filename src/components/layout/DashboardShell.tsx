@@ -15,6 +15,8 @@ import {
   Lock,
   TrendingUp,
   BarChart3,
+  CreditCard,
+  Tag,
   Plus,
   LogOut,
 } from 'lucide-react';
@@ -40,6 +42,8 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
     { label: 'Dashboard', href: '/', icon: Home },
     { label: 'Transaction Ledger', href: '/ledger', icon: Receipt },
     { label: 'Accounts & Reserves', href: '/accounts', icon: Landmark },
+    { label: 'Cards & Credit Debt', href: '/cards', icon: CreditCard },
+    { label: 'Categories', href: '/categories', icon: Tag },
     { label: 'Recurring & Forecast', href: '/recurring', icon: Calendar },
     { label: 'Fixed Deposits (FDR)', href: '/fixed-deposits', icon: Lock },
     { label: 'Investments & Assets', href: '/investments', icon: TrendingUp },

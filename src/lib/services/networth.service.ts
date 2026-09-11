@@ -5,6 +5,8 @@ export interface NetWorthSummary {
   totalLiquid: number;
   totalLocked: number;
   totalInvested: number;
+  grossAssets: number;
+  totalCreditDebt: number;
   netWorth: number;
   currency: string;
   accountsByTier: {
@@ -27,9 +29,18 @@ export async function getNetWorthSummary(userId: string): Promise<NetWorthSummar
     include: {
       fixedDeposit: true,
       investmentPosition: true,
+      cards: true,
     },
     orderBy: { createdAt: 'desc' },
   });
+
+  // Calculate credit debt
+  const creditCards = await prisma.card.findMany({
+    where: { userId, cardType: 'CREDIT', isActive: true },
+    select: { currentBalance: true },
+  });
+
+  const totalCreditDebt = creditCards.reduce((sum, card) => sum + Number(card.currentBalance || 0), 0);
 
   let totalLiquid = 0;
   let totalLocked = 0;
@@ -62,12 +73,15 @@ export async function getNetWorthSummary(userId: string): Promise<NetWorthSummar
     }
   }
 
-  const netWorth = totalLiquid + totalLocked + totalInvested;
+  const grossAssets = totalLiquid + totalLocked + totalInvested;
+  const netWorth = grossAssets - totalCreditDebt;
 
   return {
     totalLiquid,
     totalLocked,
     totalInvested,
+    grossAssets,
+    totalCreditDebt,
     netWorth,
     currency,
     accountsByTier,

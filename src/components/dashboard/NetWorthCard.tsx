@@ -9,6 +9,8 @@ interface NetWorthCardProps {
   totalLiquid: number;
   totalLocked: number;
   totalInvested: number;
+  grossAssets?: number;
+  totalCreditDebt?: number;
   currency: string;
 }
 
@@ -17,6 +19,8 @@ export default function NetWorthCard({
   totalLiquid,
   totalLocked,
   totalInvested,
+  grossAssets,
+  totalCreditDebt = 0,
   currency,
 }: NetWorthCardProps) {
   const [expanded, setExpanded] = useState(false);
@@ -97,6 +101,19 @@ export default function NetWorthCard({
               {hideValues ? '••••' : formatCurrency(totalInvested, currency)}
             </span>
           </div>
+
+          {/* Credit Card Liabilities (if any) */}
+          {totalCreditDebt > 0 && (
+            <div className="flex items-center justify-between pt-2 border-t border-slate-800/80">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-sm shadow-rose-500/50" />
+                <span className="text-rose-300 font-medium">Credit Card Debt (Liabilities)</span>
+              </div>
+              <span className="font-bold text-rose-400">
+                {hideValues ? '••••' : `− ${formatCurrency(totalCreditDebt, currency)}`}
+              </span>
+            </div>
+          )}
         </div>
       )}
     </div>

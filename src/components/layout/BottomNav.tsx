@@ -13,6 +13,8 @@ import {
   Lock,
   TrendingUp,
   BarChart3,
+  CreditCard,
+  Tag,
   Settings,
   X,
 } from 'lucide-react';
@@ -128,6 +130,42 @@ export default function BottomNav({ onOpenQuickAdd }: BottomNavProps) {
                 <div>
                   <div className="text-xs font-semibold">Reports & Flow</div>
                   <div className="text-[10px] text-slate-500">Analytics & Breakdown</div>
+                </div>
+              </Link>
+
+              <Link
+                href="/cards"
+                onClick={() => setShowMoreMenu(false)}
+                className={`p-3.5 rounded-2xl border flex items-center gap-3 transition-colors ${
+                  pathname.startsWith('/cards')
+                    ? 'bg-rose-500/10 border-rose-500 text-rose-400'
+                    : 'bg-slate-800/60 border-slate-700/60 text-slate-300 hover:bg-slate-800'
+                }`}
+              >
+                <div className="p-2 rounded-xl bg-rose-500/10 text-rose-400">
+                  <CreditCard className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="text-xs font-semibold">Cards & Debt</div>
+                  <div className="text-[10px] text-slate-500">Limits & Utilization</div>
+                </div>
+              </Link>
+
+              <Link
+                href="/categories"
+                onClick={() => setShowMoreMenu(false)}
+                className={`p-3.5 rounded-2xl border flex items-center gap-3 transition-colors ${
+                  pathname.startsWith('/categories')
+                    ? 'bg-amber-500/10 border-amber-500 text-amber-400'
+                    : 'bg-slate-800/60 border-slate-700/60 text-slate-300 hover:bg-slate-800'
+                }`}
+              >
+                <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400">
+                  <Tag className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="text-xs font-semibold">Categories</div>
+                  <div className="text-[10px] text-slate-500">Taxonomy & Subcategories</div>
                 </div>
               </Link>
             </div>

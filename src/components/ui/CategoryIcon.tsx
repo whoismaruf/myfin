@@ -20,6 +20,13 @@ import {
   Building,
   CreditCard,
   Layers,
+  GraduationCap,
+  Gamepad2,
+  Heart,
+  Coffee,
+  Tag,
+  Sparkles,
+  Shield,
   HelpCircle,
 } from 'lucide-react';
 
@@ -44,6 +51,13 @@ const ICON_MAP: Record<string, any> = {
   Building,
   CreditCard,
   Layers,
+  GraduationCap,
+  Gamepad2,
+  Heart,
+  Coffee,
+  Tag,
+  Sparkles,
+  Shield,
 };
 
 interface CategoryIconProps {

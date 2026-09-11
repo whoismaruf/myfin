@@ -157,41 +157,45 @@ export default function AccountsPage() {
 
             return (
               <div key={tier.key} className="space-y-3.5">
-                <div className="flex items-center justify-between px-1">
-                  <div className="flex items-center gap-2.5">
-                    <Icon className={`w-5 h-5 ${tier.color}`} />
+                <div className="flex items-center justify-between px-1 mb-2">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-8 h-8 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-center ${tier.color}`}>
+                      <Icon className="w-4 h-4" />
+                    </div>
                     <div>
-                      <span className="text-sm font-bold text-white">{tier.label}</span>
-                      <span className="text-[11px] text-slate-500 hidden sm:inline ml-2">({tier.desc})</span>
+                      <div className="text-base font-bold text-white flex items-center gap-2">
+                        <span>{tier.label}</span>
+                        <span className="text-xs text-slate-400 font-normal hidden sm:inline">({tier.desc})</span>
+                      </div>
                     </div>
                   </div>
-                  <span className="text-sm font-black text-slate-100">
+                  <span className="text-base font-black tracking-tight text-white">
                     {formatCurrency(tierSubtotal, currency)}
                   </span>
                 </div>
 
                 {tierAccounts.length === 0 ? (
-                  <div className="p-6 rounded-2xl bg-slate-800/20 border border-slate-800 text-center text-xs text-slate-500">
+                  <div className="p-8 rounded-3xl bg-slate-900/40 border border-dashed border-slate-800 text-center text-xs text-slate-500">
                     No accounts recorded in this tier yet.
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {tierAccounts.map((acc) => (
                       <div
                         key={acc.id}
-                        className="p-4 bg-slate-800/50 border border-slate-700/60 rounded-3xl flex flex-col justify-between hover:bg-slate-800/70 transition-all hover:border-slate-600 shadow-md"
+                        className="p-5 md:p-6 bg-slate-900/70 border border-slate-800/80 hover:border-slate-700/80 rounded-3xl flex flex-col justify-between hover:bg-slate-900/90 transition-all shadow-sm hover:shadow-md space-y-4"
                       >
-                        <div className="flex items-start justify-between gap-2 mb-3">
+                        <div className="flex items-start justify-between gap-3">
                           <div>
-                            <div className="font-bold text-white text-sm">
+                            <div className="font-bold text-white text-base tracking-tight">
                               {acc.name}
                             </div>
-                            <div className="flex items-center gap-2 mt-1">
-                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-700/70 text-slate-300 font-medium">
+                            <div className="flex items-center gap-2 mt-1.5">
+                              <span className="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 font-medium border border-slate-700/60">
                                 {acc.subtype}
                               </span>
                               {acc.institution && (
-                                <span className="text-[11px] text-slate-400 truncate max-w-[120px]">
+                                <span className="text-xs text-slate-400 truncate max-w-[130px]">
                                   {acc.institution}
                                 </span>
                               )}
@@ -204,7 +208,7 @@ export default function AccountsPage() {
                               setStatementBalance(acc.currentBalance.toString());
                               setReconcileResult(null);
                             }}
-                            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 hover:text-emerald-400 transition-colors shrink-0"
+                            className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-400 hover:text-emerald-400 border border-slate-700/60 transition-colors shrink-0"
                             title="Audit statement balance"
                           >
                             <Scale className="w-4 h-4" />
@@ -213,21 +217,21 @@ export default function AccountsPage() {
 
                         {/* Linked Cards under this account */}
                         {acc.cards && acc.cards.length > 0 ? (
-                          <div className="my-2 pt-2 border-t border-slate-700/40 space-y-1">
-                            <div className="text-[10px] text-slate-400 font-medium flex items-center justify-between">
-                              <span className="flex items-center gap-1">
-                                <CreditCard className="w-3 h-3 text-slate-400" />
+                          <div className="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-2">
+                            <div className="text-xs text-slate-400 font-medium flex items-center justify-between">
+                              <span className="flex items-center gap-1.5">
+                                <CreditCard className="w-3.5 h-3.5 text-slate-400" />
                                 <span>Cards ({acc.cards.length})</span>
                               </span>
-                              <Link href="/cards" className="text-[10px] text-emerald-400 hover:underline">
+                              <Link href="/cards" className="text-xs text-emerald-400 hover:underline font-semibold">
                                 View &rarr;
                               </Link>
                             </div>
-                            <div className="flex flex-wrap gap-1">
+                            <div className="flex flex-wrap gap-1.5">
                               {acc.cards.map((c: any) => (
                                 <span
                                   key={c.id}
-                                  className={`text-[9px] px-1.5 py-0.5 rounded border font-mono flex items-center gap-1 ${
+                                  className={`text-xs px-2 py-0.5 rounded-lg border font-mono flex items-center gap-1.5 ${
                                     c.cardType === 'CREDIT'
                                       ? 'bg-rose-500/10 text-rose-300 border-rose-500/20'
                                       : 'bg-teal-500/10 text-teal-300 border-teal-500/20'
@@ -240,17 +244,17 @@ export default function AccountsPage() {
                             </div>
                           </div>
                         ) : (
-                          <div className="my-2 pt-2 border-t border-slate-700/40 flex items-center justify-between text-[10px] text-slate-500">
-                            <span>No cards linked</span>
-                            <Link href="/cards" className="text-slate-400 hover:text-emerald-400">
+                          <div className="p-3 rounded-2xl bg-slate-950/40 border border-slate-800/60 flex items-center justify-between text-xs text-slate-500">
+                            <span>No cards attached</span>
+                            <Link href="/cards" className="text-slate-400 hover:text-emerald-400 font-medium">
                               + Add Card
                             </Link>
                           </div>
                         )}
 
-                        <div className="pt-2 border-t border-slate-700/40 flex items-end justify-between">
-                          <span className="text-[10px] text-slate-400 font-medium">Current Balance</span>
-                          <span className="font-black text-white text-base">
+                        <div className="pt-3 border-t border-slate-800/80 flex items-end justify-between">
+                          <span className="text-xs text-slate-400 font-medium">Current Balance</span>
+                          <span className="font-black text-white text-xl tracking-tight">
                             {formatCurrency(acc.currentBalance, acc.currency)}
                           </span>
                         </div>

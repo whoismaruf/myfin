@@ -208,27 +208,27 @@ export default function CardsPage() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* ─────────────────────────────────────────────────────────────
           1. HEADER & ACTIONS
          ───────────────────────────────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-800/80">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold text-white">Cards & Credit Debt</h1>
-            <span className="flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
-              <ShieldCheck className="w-3 h-3" />
+          <div className="flex items-center gap-2.5">
+            <h1 className="text-2xl font-bold tracking-tight text-white">Cards & Credit Debt</h1>
+            <span className="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
+              <ShieldCheck className="w-3.5 h-3.5" />
               AES-256-GCM Encrypted
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-sm text-slate-400 mt-1.5">
             Debit and credit cards under your accounts. Direct liquidity synchronization and real-time debt management.
           </p>
         </div>
 
         <button
           onClick={() => setIsAddModalOpen(true)}
-          className="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 active:scale-[0.98] transition-all shrink-0"
+          className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 active:scale-[0.98] transition-all shrink-0"
         >
           <Plus className="w-4 h-4 stroke-[2.5]" />
           <span>Add New Card</span>
@@ -238,57 +238,57 @@ export default function CardsPage() {
       {/* ─────────────────────────────────────────────────────────────
           2. CREDIT DEBT OVERVIEW HERO
          ───────────────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
         {/* Total Credit Debt */}
-        <div className="p-4 rounded-2xl bg-gradient-to-br from-rose-950/40 via-slate-900 to-slate-900 border border-rose-500/30 space-y-2">
+        <div className="p-5 md:p-6 rounded-3xl bg-gradient-to-br from-rose-950/40 via-slate-900 to-slate-900/90 border border-rose-500/30 space-y-3 shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-400 font-medium">Total Credit Debt</span>
-            <div className="w-7 h-7 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400">
-              <TrendingDown className="w-3.5 h-3.5" />
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Credit Debt</span>
+            <div className="w-8 h-8 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400">
+              <TrendingDown className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-lg md:text-xl font-extrabold text-rose-400">
+          <div className="text-2xl md:text-3xl font-black tracking-tight text-rose-400">
             {currency} {overview.totalCreditDebt.toLocaleString()}
           </div>
-          <div className="text-[10px] text-slate-400">
+          <div className="text-xs text-slate-400 font-medium">
             Across {overview.activeCardsCount} credit cards
           </div>
         </div>
 
         {/* Total Credit Limit */}
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+        <div className="p-5 md:p-6 rounded-3xl bg-slate-900/80 border border-slate-800/80 space-y-3 shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-400 font-medium">Total Credit Limit</span>
-            <div className="w-7 h-7 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300">
-              <CreditCard className="w-3.5 h-3.5" />
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Credit Limit</span>
+            <div className="w-8 h-8 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300">
+              <CreditCard className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-lg md:text-xl font-extrabold text-white">
+          <div className="text-2xl md:text-3xl font-black tracking-tight text-white">
             {currency} {overview.totalCreditLimit.toLocaleString()}
           </div>
-          <div className="text-[10px] text-slate-400">Approved borrowing capacity</div>
+          <div className="text-xs text-slate-400 font-medium">Approved borrowing capacity</div>
         </div>
 
         {/* Available Credit */}
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+        <div className="p-5 md:p-6 rounded-3xl bg-slate-900/80 border border-slate-800/80 space-y-3 shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-400 font-medium">Available Credit</span>
-            <div className="w-7 h-7 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
-              <Sparkles className="w-3.5 h-3.5" />
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Available Credit</span>
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+              <Sparkles className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-lg md:text-xl font-extrabold text-emerald-400">
+          <div className="text-2xl md:text-3xl font-black tracking-tight text-emerald-400">
             {currency} {overview.totalAvailableCredit.toLocaleString()}
           </div>
-          <div className="text-[10px] text-slate-400">Remaining limit ready to use</div>
+          <div className="text-xs text-slate-400 font-medium">Remaining limit ready to use</div>
         </div>
 
         {/* Overall Utilization */}
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+        <div className="p-5 md:p-6 rounded-3xl bg-slate-900/80 border border-slate-800/80 space-y-3 shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-400 font-medium">Debt Utilization</span>
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Debt Utilization</span>
             <span
-              className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+              className={`text-xs font-bold px-2.5 py-0.5 rounded-full border ${
                 overview.overallUtilization > 50
                   ? 'bg-rose-500/10 text-rose-400 border-rose-500/30'
                   : overview.overallUtilization > 30
@@ -311,7 +311,7 @@ export default function CardsPage() {
               style={{ width: `${Math.min(100, Math.max(0, overview.overallUtilization))}%` }}
             />
           </div>
-          <div className="text-[10px] text-slate-400 flex items-center justify-between">
+          <div className="text-xs text-slate-400 font-medium flex items-center justify-between">
             <span>{overview.overallUtilization <= 30 ? 'Healthy (<30%)' : 'Caution: High usage'}</span>
             <span>Target: &lt;30%</span>
           </div>
@@ -321,10 +321,10 @@ export default function CardsPage() {
       {/* ─────────────────────────────────────────────────────────────
           3. FILTER TABS
          ───────────────────────────────────────────────────────────── */}
-      <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
+      <div className="flex items-center gap-2 p-1.5 bg-slate-900/80 border border-slate-800/80 rounded-2xl w-fit">
         <button
           onClick={() => setFilterType('ALL')}
-          className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
             filterType === 'ALL'
               ? 'bg-slate-800 text-white border border-slate-700 shadow-sm'
               : 'text-slate-400 hover:text-slate-200'
@@ -334,7 +334,7 @@ export default function CardsPage() {
         </button>
         <button
           onClick={() => setFilterType('CREDIT')}
-          className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
             filterType === 'CREDIT'
               ? 'bg-rose-500/10 text-rose-400 border border-rose-500/30 shadow-sm'
               : 'text-slate-400 hover:text-slate-200'
@@ -344,7 +344,7 @@ export default function CardsPage() {
         </button>
         <button
           onClick={() => setFilterType('DEBIT')}
-          className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
             filterType === 'DEBIT'
               ? 'bg-teal-500/10 text-teal-400 border border-teal-500/30 shadow-sm'
               : 'text-slate-400 hover:text-slate-200'

@@ -62,10 +62,10 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
       {/* ─────────────────────────────────────────────────────────────
           1. DESKTOP SIDEBAR (visible on md screens and above)
          ───────────────────────────────────────────────────────────── */}
-      <aside className="hidden md:flex flex-col w-64 bg-slate-900 border-r border-slate-800 shrink-0 sticky top-0 h-screen justify-between z-30">
-        <div className="p-5 space-y-6 overflow-y-auto">
+      <aside className="hidden md:flex flex-col w-64 lg:w-72 bg-slate-900 border-r border-slate-800 shrink-0 sticky top-0 h-screen justify-between z-30">
+        <div className="p-6 space-y-6 overflow-y-auto">
           {/* App Logo */}
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3.5">
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20 shrink-0">
               <Wallet className="w-5 h-5 text-slate-950 font-bold" />
             </div>
@@ -90,7 +90,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
           </button>
 
           {/* Nav Links */}
-          <nav className="space-y-1">
+          <nav className="space-y-1.5">
             {navItems.map((item) => {
               const active = isNavActive(item.href);
               const Icon = item.icon;
@@ -112,18 +112,18 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
           </nav>
         </div>
 
-        {/* User Profile Card & Sign Out (Sidebar Footer) */}
-        <div className="p-4 border-t border-slate-800/80 bg-slate-900/50">
+        {/* User Profile Footer */}
+        <div className="p-5 border-t border-slate-800 bg-slate-900/60">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5 overflow-hidden">
-              <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-slate-200">
                 {user.name?.[0]?.toUpperCase() || 'M'}
               </div>
               <div className="overflow-hidden">
-                <div className="text-xs font-semibold text-white truncate max-w-[110px]">
+                <div className="text-xs font-semibold text-white truncate max-w-[130px]">
                   {user.name || 'Owner'}
                 </div>
-                <div className="text-[10px] text-slate-500 truncate max-w-[110px]">
+                <div className="text-[10px] text-slate-500 truncate max-w-[130px]">
                   {user.email}
                 </div>
               </div>
@@ -177,7 +177,7 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
         </header>
 
         {/* Desktop Top Header Bar (Greeting & Fast Action) */}
-        <header className="hidden md:flex sticky top-0 z-20 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/60 px-8 py-3.5 items-center justify-between">
+        <header className="hidden md:flex sticky top-0 z-20 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/60 px-8 py-4 items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="text-xs font-semibold text-slate-300">
               Personal Finance & Wealth OS
@@ -192,19 +192,19 @@ export default function DashboardShell({ user, children }: DashboardShellProps) 
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsQuickAddOpen(true)}
-              className="py-1.5 px-3 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors"
+              className="py-1.5 px-3.5 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Quick Action</span>
             </button>
-            <div className="text-xs text-slate-400">
+            <div className="text-xs text-slate-400 font-medium">
               {new Date().toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
             </div>
           </div>
         </header>
 
         {/* Page Content Container */}
-        <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 pb-28 md:pb-12">
+        <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-32 md:pb-16">
           {children}
         </main>
       </div>

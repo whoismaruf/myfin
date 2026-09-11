@@ -129,12 +129,12 @@ export default function BankCardVisual({
   const utilBarColor = util > 70 ? 'bg-rose-500' : util > 30 ? 'bg-amber-500' : 'bg-emerald-500';
 
   return (
-    <div className="flex flex-col space-y-3">
+    <div className="bg-slate-900/70 border border-slate-800/80 hover:border-slate-700/80 rounded-3xl p-5 md:p-6 space-y-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
       {/* ─────────────────────────────────────────────────────────────
           1. REALISTIC CARD SURFACE
          ───────────────────────────────────────────────────────────── */}
       <div
-        className={`relative w-full aspect-[1.586/1] max-w-md rounded-2xl p-5 bg-gradient-to-br ${theme.bg} border ${theme.border} shadow-2xl flex flex-col justify-between overflow-hidden group transition-all`}
+        className={`relative w-full aspect-[1.586/1] rounded-2xl p-5 sm:p-6 bg-gradient-to-br ${theme.bg} border ${theme.border} shadow-2xl flex flex-col justify-between overflow-hidden group transition-all`}
       >
         {/* Subtle holographic sheen overlay */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none" />
@@ -142,17 +142,17 @@ export default function BankCardVisual({
         {/* Top Row: Bank / Account & Card Type Badge */}
         <div className="relative z-10 flex items-start justify-between">
           <div>
-            <div className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold truncate max-w-[180px]">
+            <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400 font-semibold truncate max-w-[180px]">
               {card.accountName}
             </div>
-            <div className="text-sm font-bold text-white tracking-wide truncate max-w-[220px]">
+            <div className="text-sm sm:text-base font-bold text-white tracking-wide truncate max-w-[220px]">
               {card.cardName}
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <span
-              className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+              className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
                 isCredit
                   ? 'bg-rose-500/10 text-rose-300 border-rose-500/30'
                   : 'bg-teal-500/10 text-teal-300 border-teal-500/30'
@@ -192,7 +192,7 @@ export default function BankCardVisual({
         {/* Card Number & Reveal Action */}
         <div className="relative z-10 space-y-3">
           <div className="flex items-center justify-between">
-            <div className="font-mono text-sm md:text-base font-semibold tracking-widest text-white drop-shadow">
+            <div className="font-mono text-sm sm:text-base md:text-lg font-semibold tracking-[0.16em] text-white drop-shadow">
               {isRevealed && fullNumber ? fullNumber : card.maskedNumber}
             </div>
 
@@ -255,7 +255,7 @@ export default function BankCardVisual({
       {/* ─────────────────────────────────────────────────────────────
           2. CARD FINANCIAL STATUS / DEBT BAR
          ───────────────────────────────────────────────────────────── */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 space-y-2.5">
+      <div className="bg-slate-950/60 border border-slate-800/80 rounded-2xl p-4 space-y-3">
         {isCredit ? (
           <>
             {/* Credit Utilization & Balance Header */}

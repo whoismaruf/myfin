@@ -27,35 +27,39 @@ export default function NetWorthCard({
   const [hideValues, setHideValues] = useState(false);
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700/60 rounded-3xl p-5 shadow-xl relative overflow-hidden">
+    <div className="bg-gradient-to-br from-slate-900/90 via-slate-900/70 to-slate-950 border border-slate-800/90 rounded-3xl p-6 sm:p-7 shadow-xl relative overflow-hidden h-full flex flex-col justify-between">
       {/* Background Decorative Glow */}
-      <div className="absolute -top-16 -right-16 w-36 h-36 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
-      <div className="absolute -bottom-16 -left-16 w-36 h-36 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute -top-16 -right-16 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-16 -left-16 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Top Header */}
-      <div className="flex items-center justify-between text-xs text-slate-400 mb-2 relative z-10">
-        <div className="flex items-center gap-1.5 font-medium tracking-wide uppercase text-[11px] text-emerald-400">
-          <ShieldCheck className="w-4 h-4" />
-          <span>Consolidated Net Worth</span>
+      <div>
+        {/* Top Header */}
+        <div className="flex items-center justify-between text-xs text-slate-400 mb-3 relative z-10">
+          <div className="flex items-center gap-2 font-semibold tracking-wider uppercase text-xs text-emerald-400">
+            <ShieldCheck className="w-4 h-4" />
+            <span>Consolidated Net Worth</span>
+          </div>
+          <button
+            onClick={() => setHideValues(!hideValues)}
+            className="p-1.5 hover:text-white text-slate-400 rounded-xl hover:bg-slate-800/60 transition-colors"
+            title={hideValues ? 'Show values' : 'Hide values'}
+          >
+            {hideValues ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+          </button>
         </div>
-        <button
-          onClick={() => setHideValues(!hideValues)}
-          className="p-1 hover:text-slate-200 text-slate-400 transition-colors"
-          title={hideValues ? 'Show values' : 'Hide values'}
-        >
-          {hideValues ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-        </button>
+
+        {/* Big Number */}
+        <div className="mb-5 relative z-10">
+          <div className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
+            {hideValues ? '••••••••' : formatCurrency(netWorth, currency)}
+          </div>
+          <p className="text-xs text-slate-400 mt-1 font-medium">
+            Real-time aggregated capital across all accounts
+          </p>
+        </div>
       </div>
 
-      {/* Big Number */}
-      <div className="mb-4 relative z-10">
-        <div className="text-3xl font-black tracking-tight text-white">
-          {hideValues ? '••••••••' : formatCurrency(netWorth, currency)}
-        </div>
-        <p className="text-[11px] text-slate-400 mt-0.5">
-          Real-time aggregated capital across all accounts
-        </p>
-      </div>
+
 
       {/* Accordion Toggle */}
       <button

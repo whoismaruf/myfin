@@ -43,23 +43,25 @@ export default function LiquidityStrip({
   ];
 
   return (
-    <div className="grid grid-cols-3 lg:grid-cols-1 gap-2.5 h-full">
+    <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3.5 h-full">
       {cards.map((card) => {
         const Icon = card.icon;
         return (
           <div
             key={card.title}
-            className={`p-3.5 rounded-2xl border ${card.bg} flex flex-col justify-between`}
+            className={`p-4 sm:p-5 rounded-3xl border ${card.bg} flex flex-col justify-between shadow-sm transition-all`}
           >
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[11px] font-semibold text-slate-300">{card.title}</span>
-              <Icon className={`w-4 h-4 ${card.color}`} />
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-bold text-slate-300">{card.title}</span>
+              <div className="w-8 h-8 rounded-xl bg-black/30 border border-white/5 flex items-center justify-center">
+                <Icon className={`w-4 h-4 ${card.color}`} />
+              </div>
             </div>
             <div>
-              <div className="text-sm font-black text-white truncate">
+              <div className="text-lg sm:text-xl font-black text-white tracking-tight truncate">
                 {formatCurrency(card.amount, currency)}
               </div>
-              <div className="text-[10px] text-slate-400 truncate mt-0.5">{card.tag}</div>
+              <div className="text-xs text-slate-400 truncate mt-1 font-medium">{card.tag}</div>
             </div>
           </div>
         );

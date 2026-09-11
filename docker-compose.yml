@@ -6,8 +6,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-myfin}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-myfin_secure_password}
       POSTGRES_DB: ${POSTGRES_DB:-myfin}
-    ports:
-      - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql
     healthcheck:

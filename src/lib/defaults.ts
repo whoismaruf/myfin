@@ -225,6 +225,7 @@ export async function seedUserCategories(userId: string, customPrisma?: any) {
 
   const createdCategories: any[] = [];
 
+  // 1. Create root categories if missing
   for (const catDef of DEFAULT_CATEGORIES) {
     const rootKey = `${catDef.name.toLowerCase()}:root`;
     let parentId: string | undefined = existingMap.get(rootKey);
@@ -244,27 +245,35 @@ export async function seedUserCategories(userId: string, customPrisma?: any) {
       existingMap.set(rootKey, parent.id);
       createdCategories.push(parent);
     }
+  }
 
-    const currentParentId: string = parentId!;
+  // 2. Batch create all missing subcategories using createMany
+  const subcategoriesToCreate: any[] = [];
+  for (const catDef of DEFAULT_CATEGORIES) {
+    const rootKey = `${catDef.name.toLowerCase()}:root`;
+    const parentId = existingMap.get(rootKey);
+    if (!parentId) continue;
 
-    // Seed subcategories
     for (const sub of catDef.subcategories) {
-      const subKey = `${sub.name.toLowerCase()}:${currentParentId}`;
+      const subKey = `${sub.name.toLowerCase()}:${parentId}`;
       if (!existingMap.has(subKey)) {
-        const child = await db.category.create({
-          data: {
-            userId,
-            name: sub.name,
-            type: catDef.type,
-            icon: sub.icon || catDef.icon,
-            color: sub.color || catDef.color,
-            parentId: currentParentId,
-          },
+        subcategoriesToCreate.push({
+          userId,
+          name: sub.name,
+          type: catDef.type,
+          icon: sub.icon || catDef.icon,
+          color: sub.color || catDef.color,
+          parentId: parentId,
         });
-        existingMap.set(subKey, child.id);
-        createdCategories.push(child);
       }
     }
+  }
+
+  if (subcategoriesToCreate.length > 0) {
+    await db.category.createMany({
+      data: subcategoriesToCreate,
+    });
+    createdCategories.push(...subcategoriesToCreate);
   }
 
   return createdCategories;

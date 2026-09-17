@@ -21,7 +21,7 @@ export async function middleware(req: NextRequest) {
   });
 
   // Check onboarding status for first-run redirect
-  let isOnboarded = true;
+  let isOnboarded = false;
   try {
     const statusUrl = new URL('/api/onboarding/status', req.nextUrl.origin);
     const statusRes = await fetch(statusUrl.toString(), { cache: 'no-store' });
@@ -31,6 +31,11 @@ export async function middleware(req: NextRequest) {
     }
   } catch (e) {
     console.error('Middleware status check error:', e);
+  }
+
+  // Valid token implies the system is onboarded
+  if (token) {
+    isOnboarded = true;
   }
 
   // If system is fresh (not onboarded yet)

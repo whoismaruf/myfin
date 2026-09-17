@@ -4,9 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { Shield, Wallet, Lock, Mail, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useTheme } from '@/components/providers/ThemeProvider';
 
 export default function OnboardingPage() {
   const router = useRouter();
+  const { themeConfig } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -68,40 +70,46 @@ export default function OnboardingPage() {
 
   if (checkingStatus) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-slate-400 text-sm">Verifying system state...</p>
+      <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center bg-app-bg">
+        <div className="w-8 h-8 border-2 border-brand border-t-transparent rounded-full animate-spin mb-4" />
+        <p className="text-app-muted text-sm">Verifying system state...</p>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4 py-8 sm:px-6">
-      <div className="w-full max-w-md flex flex-col justify-between min-h-[600px] sm:min-h-0 sm:bg-slate-900/40 sm:border sm:border-slate-800/80 sm:rounded-3xl sm:p-8 sm:shadow-2xl sm:shadow-emerald-950/10 gap-6">
+    <div className="flex min-h-screen items-center justify-center bg-app-bg px-4 py-8 sm:px-6 transition-colors duration-200">
+      <div className="w-full max-w-md flex flex-col justify-between min-h-[600px] sm:min-h-0 sm:bg-app-card/60 sm:border sm:border-app-border sm:rounded-3xl sm:p-8 sm:shadow-2xl gap-6 backdrop-blur-md">
         <div className="space-y-6">
           {/* Brand Header */}
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-              <Wallet className="w-6 h-6 text-slate-950 font-bold" />
+            <div
+              className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg shrink-0"
+              style={{
+                background: `linear-gradient(135deg, ${themeConfig.colors.brandGradientFrom}, ${themeConfig.colors.brandGradientTo})`,
+                boxShadow: `0 10px 24px -4px ${themeConfig.colors.primary}40`,
+              }}
+            >
+              <Wallet className="w-6 h-6 font-bold" style={{ color: themeConfig.colors.primaryForeground }} />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-                myfin
-                <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <h1 className="text-2xl font-normal text-app-text tracking-[0.16em] font-display flex items-center gap-2">
+                MYFIN
+                <span className="text-xs px-2 py-0.5 rounded-full bg-brand/10 text-brand border border-brand/20 font-semibold">
                   v1.0
                 </span>
               </h1>
-              <p className="text-xs text-slate-400">Personal Finance & Wealth OS</p>
+              <p className="text-xs text-app-muted">Personal Finance & Wealth OS</p>
             </div>
           </div>
 
           {/* Welcome Notice */}
-          <div className="bg-slate-800/40 border border-slate-700/60 rounded-2xl p-4 text-xs text-slate-300 space-y-1.5">
-            <div className="flex items-center gap-2 text-emerald-400 font-medium">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-xs text-slate-300 space-y-1.5">
+            <div className="flex items-center gap-2 text-brand font-medium">
               <Shield className="w-4 h-4" />
               <span>Single-Owner Encrypted Instance</span>
             </div>
-            <p className="text-slate-400 leading-relaxed">
+            <p className="text-app-muted leading-relaxed">
               Welcome to your private financial OS. Set up your master account credentials below.
               Once created, registration is locked and only this account can access the system.
             </p>
@@ -124,7 +132,7 @@ export default function OnboardingPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Maruf Khan"
-                className="w-full px-4 py-3 bg-slate-800/60 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand transition-colors"
               />
             </div>
 
@@ -139,7 +147,7 @@ export default function OnboardingPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@domain.com"
-                  className="w-full pl-10 pr-4 py-3 bg-slate-800/60 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
+                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand transition-colors"
                 />
                 <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
               </div>
@@ -157,11 +165,11 @@ export default function OnboardingPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full pl-10 pr-4 py-3 bg-slate-800/60 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
+                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand transition-colors"
                 />
                 <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
               </div>
-              <p className="text-[10px] text-slate-500 mt-1">Minimum 6 characters. Hashed with bcrypt (12 rounds).</p>
+              <p className="text-[10px] text-app-muted mt-1">Minimum 6 characters. Hashed with bcrypt (12 rounds).</p>
             </div>
 
             <div>
@@ -182,13 +190,13 @@ export default function OnboardingPage() {
                       onClick={() => setCurrency(item.code as any)}
                       className={`py-3 px-2 rounded-xl border flex flex-col items-center justify-center transition-all ${
                         isSelected
-                          ? 'bg-emerald-500/10 border-emerald-500 text-emerald-400 shadow-md shadow-emerald-500/10'
-                          : 'bg-slate-800/50 border-slate-700/80 text-slate-400 hover:border-slate-600'
+                          ? 'bg-brand/10 border-brand text-brand shadow-md shadow-brand/10 font-bold'
+                          : 'bg-white/5 border-white/10 text-slate-400 hover:border-white/20'
                       }`}
                     >
                       <span className="text-xl font-bold leading-tight">{item.symbol}</span>
                       <span className="text-[11px] font-semibold tracking-wider mt-0.5">{item.code}</span>
-                      <span className="text-[9px] text-slate-500">{item.label}</span>
+                      <span className="text-[9px] text-app-muted">{item.label}</span>
                     </button>
                   );
                 })}
@@ -196,8 +204,8 @@ export default function OnboardingPage() {
             </div>
 
             <div className="pt-2">
-              <div className="flex items-center gap-2 p-3 bg-slate-800/30 rounded-xl border border-slate-700/50 text-[11px] text-slate-400">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <div className="flex items-center gap-2 p-3 bg-white/5 rounded-xl border border-white/10 text-[11px] text-app-muted">
+                <CheckCircle2 className="w-4 h-4 text-brand shrink-0" />
                 <span>Includes default starter accounts & expense categories</span>
               </div>
             </div>
@@ -205,11 +213,14 @@ export default function OnboardingPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 px-4 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-semibold rounded-xl text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-emerald-500/25 active:scale-[0.99] mt-2"
+              className="w-full py-3.5 px-4 bg-brand hover:bg-brand-hover disabled:opacity-50 text-brand-fg font-semibold rounded-xl text-sm flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.99] mt-2"
+              style={{
+                boxShadow: `0 10px 24px -4px ${themeConfig.colors.primary}40`,
+              }}
             >
               {loading ? (
                 <span className="flex items-center gap-2">
-                  <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                  <span className="w-4 h-4 border-2 border-brand-fg border-t-transparent rounded-full animate-spin" />
                   Initializing myfin...
                 </span>
               ) : (

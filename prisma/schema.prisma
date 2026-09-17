@@ -110,6 +110,8 @@ model Account {
   tier           AccountTier
   subtype        AccountSubtype
   institution    String?
+  accountNumber  String?
+  description    String?
   currency       String         @default("BDT")
   currentBalance Decimal        @db.Decimal(12, 2) @default(0)
   openingBalance Decimal        @db.Decimal(12, 2) @default(0)

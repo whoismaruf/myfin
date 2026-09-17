@@ -57,20 +57,7 @@ export async function POST(req: Request) {
       // Seed starter categories & subcategories
       await seedUserCategories(user.id, tx);
 
-      // Seed starter accounts (LIQUID tier)
-      await tx.account.create({
-        data: {
-          userId: user.id,
-          name: 'Primary Checking',
-          tier: 'LIQUID',
-          subtype: 'CHECKING',
-          currency: currency,
-          currentBalance: 0,
-          openingBalance: 0,
-          institution: 'Primary Bank',
-        },
-      });
-
+      // Seed starter account (LIQUID tier - Cash only)
       await tx.account.create({
         data: {
           userId: user.id,
@@ -81,6 +68,7 @@ export async function POST(req: Request) {
           currentBalance: 0,
           openingBalance: 0,
           institution: 'Physical Cash',
+          description: 'Default cash wallet',
         },
       });
 

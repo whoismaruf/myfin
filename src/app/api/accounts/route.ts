@@ -45,6 +45,8 @@ export async function GET(req: Request) {
   const decrypted = accounts.map((acc) => ({
     ...acc,
     institution: decrypt(acc.institution),
+    accountNumber: decrypt(acc.accountNumber),
+    description: decrypt(acc.description),
     currentBalance: Number(acc.currentBalance),
     openingBalance: Number(acc.openingBalance),
     cards: (acc.cards || []).map((c) => ({
@@ -73,7 +75,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { name, tier, subtype, institution, currency, openingBalance } = parsed.data;
+    const { name, tier, subtype, institution, accountNumber, description, currency, openingBalance } = parsed.data;
 
     const account = await prisma.account.create({
       data: {
@@ -82,6 +84,8 @@ export async function POST(req: Request) {
         tier: tier as any,
         subtype: subtype as any,
         institution: encrypt(institution),
+        accountNumber: encrypt(accountNumber),
+        description: encrypt(description),
         currency: currency || user.currency || 'BDT',
         openingBalance: openingBalance,
         currentBalance: openingBalance,
@@ -93,6 +97,8 @@ export async function POST(req: Request) {
         account: {
           ...account,
           institution: decrypt(account.institution),
+          accountNumber: decrypt(account.accountNumber),
+          description: decrypt(account.description),
           currentBalance: Number(account.currentBalance),
           openingBalance: Number(account.openingBalance),
         },

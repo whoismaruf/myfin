@@ -29,6 +29,8 @@ export const accountSchema = z.object({
     'INDEX',
   ]),
   institution: z.string().optional().nullable(),
+  accountNumber: z.string().optional().nullable(),
+  description: z.string().optional().nullable(),
   currency: z.string().default('BDT'),
   openingBalance: z.coerce.number().default(0),
 });

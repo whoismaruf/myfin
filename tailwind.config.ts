@@ -9,7 +9,29 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        display: ["var(--font-brand-display)", "Space Grotesk", "Outfit", "sans-serif"],
+      },
       colors: {
+        // Dynamic Centralized Brand Theme Tokens
+        brand: {
+          DEFAULT: "rgb(var(--theme-primary-rgb) / <alpha-value>)",
+          hover: "var(--theme-primary-hover)",
+          fg: "var(--theme-primary-fg)",
+          accent: "rgb(var(--theme-accent-rgb) / <alpha-value>)",
+        },
+        // Dynamic Surface & Background Tokens
+        app: {
+          bg: "var(--theme-bg)",
+          sidebar: "var(--theme-sidebar)",
+          card: "var(--theme-card)",
+          "card-hover": "var(--theme-card-hover)",
+          border: "var(--theme-border)",
+          "border-subtle": "var(--theme-border-subtle)",
+          text: "var(--theme-text)",
+          muted: "var(--theme-text-muted)",
+        },
+        // Static Financial Tier Anchors
         liquid: {
           DEFAULT: "#10B981",
           light: "#D1FAE5",

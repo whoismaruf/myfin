@@ -2,17 +2,238 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #090d16;
-  --foreground: #f3f4f6;
+/* ─────────────────────────────────────────────────────────────────────────────
+   CENTRALIZED THEME CSS VARIABLES
+   These variables map to the active data-theme on <html>
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── DARK THEMES ── */
+
+:root,
+[data-theme="sapphire"] {
+  --theme-mode: dark;
+  --theme-bg: #090D1A;
+  --theme-sidebar: #0D1322;
+  --theme-card: #121A2E;
+  --theme-card-hover: #18223C;
+  --theme-border: rgba(99, 102, 241, 0.16);
+  --theme-border-subtle: rgba(255, 255, 255, 0.06);
+  --theme-primary: #6366F1;
+  --theme-primary-rgb: 99, 102, 241;
+  --theme-primary-hover: #4F46E5;
+  --theme-primary-fg: #FFFFFF;
+  --theme-accent: #38BDF8;
+  --theme-accent-rgb: 56, 189, 248;
+  --theme-gradient-from: #6366F1;
+  --theme-gradient-to: #38BDF8;
+  --theme-text: #F8FAFC;
+  --theme-text-muted: #94A3B8;
+  --selection-bg: rgba(99, 102, 241, 0.4);
+}
+
+[data-theme="emerald"] {
+  --theme-mode: dark;
+  --theme-bg: #070C12;
+  --theme-sidebar: #0A121A;
+  --theme-card: #0F1A24;
+  --theme-card-hover: #152432;
+  --theme-border: rgba(16, 185, 129, 0.18);
+  --theme-border-subtle: rgba(255, 255, 255, 0.06);
+  --theme-primary: #10B981;
+  --theme-primary-rgb: 16, 185, 129;
+  --theme-primary-hover: #059669;
+  --theme-primary-fg: #022C22;
+  --theme-accent: #14B8A6;
+  --theme-accent-rgb: 20, 184, 166;
+  --theme-gradient-from: #10B981;
+  --theme-gradient-to: #14B8A6;
+  --theme-text: #F8FAFC;
+  --theme-text-muted: #94A3B8;
+  --selection-bg: rgba(16, 185, 129, 0.4);
+}
+
+[data-theme="obsidian"] {
+  --theme-mode: dark;
+  --theme-bg: #09090B;
+  --theme-sidebar: #101014;
+  --theme-card: #18181C;
+  --theme-card-hover: #222228;
+  --theme-border: rgba(245, 158, 11, 0.18);
+  --theme-border-subtle: rgba(255, 255, 255, 0.06);
+  --theme-primary: #F59E0B;
+  --theme-primary-rgb: 245, 158, 11;
+  --theme-primary-hover: #D97706;
+  --theme-primary-fg: #180C02;
+  --theme-accent: #FBBF24;
+  --theme-accent-rgb: 251, 191, 36;
+  --theme-gradient-from: #F59E0B;
+  --theme-gradient-to: #FBBF24;
+  --theme-text: #FAFAFA;
+  --theme-text-muted: #A1A1AA;
+  --selection-bg: rgba(245, 158, 11, 0.4);
+}
+
+[data-theme="cyber"] {
+  --theme-mode: dark;
+  --theme-bg: #060B11;
+  --theme-sidebar: #0A111A;
+  --theme-card: #0E1924;
+  --theme-card-hover: #132333;
+  --theme-border: rgba(6, 182, 212, 0.2);
+  --theme-border-subtle: rgba(255, 255, 255, 0.06);
+  --theme-primary: #06B6D4;
+  --theme-primary-rgb: 6, 182, 212;
+  --theme-primary-hover: #0891B2;
+  --theme-primary-fg: #04272E;
+  --theme-accent: #3B82F6;
+  --theme-accent-rgb: 59, 130, 246;
+  --theme-gradient-from: #06B6D4;
+  --theme-gradient-to: #3B82F6;
+  --theme-text: #F0FDFA;
+  --theme-text-muted: #94A3B8;
+  --selection-bg: rgba(6, 182, 212, 0.4);
+}
+
+[data-theme="amethyst"] {
+  --theme-mode: dark;
+  --theme-bg: #0A0714;
+  --theme-sidebar: #100C20;
+  --theme-card: #17122C;
+  --theme-card-hover: #201A3D;
+  --theme-border: rgba(139, 92, 246, 0.2);
+  --theme-border-subtle: rgba(255, 255, 255, 0.06);
+  --theme-primary: #8B5CF6;
+  --theme-primary-rgb: 139, 92, 246;
+  --theme-primary-hover: #7C3AED;
+  --theme-primary-fg: #FFFFFF;
+  --theme-accent: #EC4899;
+  --theme-accent-rgb: 236, 72, 153;
+  --theme-gradient-from: #8B5CF6;
+  --theme-gradient-to: #EC4899;
+  --theme-text: #FAF5FF;
+  --theme-text-muted: #A78BFA;
+  --selection-bg: rgba(139, 92, 246, 0.4);
+}
+
+[data-theme="rose"] {
+  --theme-mode: dark;
+  --theme-bg: #0C080A;
+  --theme-sidebar: #140E11;
+  --theme-card: #1D1418;
+  --theme-card-hover: #291C22;
+  --theme-border: rgba(244, 63, 94, 0.2);
+  --theme-border-subtle: rgba(255, 255, 255, 0.06);
+  --theme-primary: #F43F5E;
+  --theme-primary-rgb: 244, 63, 94;
+  --theme-primary-hover: #E11D48;
+  --theme-primary-fg: #FFFFFF;
+  --theme-accent: #FB7185;
+  --theme-accent-rgb: 251, 113, 133;
+  --theme-gradient-from: #F43F5E;
+  --theme-gradient-to: #FB7185;
+  --theme-text: #FFF1F2;
+  --theme-text-muted: #FDA4AF;
+  --selection-bg: rgba(244, 63, 94, 0.4);
+}
+
+/* ── LIGHT / WHITE THEMES ── */
+
+[data-theme="snow"] {
+  --theme-mode: light;
+  --theme-bg: #F8FAFC;
+  --theme-sidebar: #FFFFFF;
+  --theme-card: #FFFFFF;
+  --theme-card-hover: #F1F5F9;
+  --theme-border: #E2E8F0;
+  --theme-border-subtle: #F1F5F9;
+  --theme-primary: #4F46E5;
+  --theme-primary-rgb: 79, 70, 229;
+  --theme-primary-hover: #4338CA;
+  --theme-primary-fg: #FFFFFF;
+  --theme-accent: #0284C7;
+  --theme-accent-rgb: 2, 132, 199;
+  --theme-gradient-from: #4F46E5;
+  --theme-gradient-to: #0284C7;
+  --theme-text: #0F172A;
+  --theme-text-muted: #64748B;
+  --selection-bg: rgba(79, 70, 229, 0.25);
+}
+
+[data-theme="nordic-emerald"] {
+  --theme-mode: light;
+  --theme-bg: #F6FAF8;
+  --theme-sidebar: #FFFFFF;
+  --theme-card: #FFFFFF;
+  --theme-card-hover: #EEF7F2;
+  --theme-border: #D1E7DD;
+  --theme-border-subtle: #E6F4ED;
+  --theme-primary: #059669;
+  --theme-primary-rgb: 5, 150, 105;
+  --theme-primary-hover: #047857;
+  --theme-primary-fg: #FFFFFF;
+  --theme-accent: #0D9488;
+  --theme-accent-rgb: 13, 148, 136;
+  --theme-gradient-from: #059669;
+  --theme-gradient-to: #0D9488;
+  --theme-text: #064E3B;
+  --theme-text-muted: #52796F;
+  --selection-bg: rgba(5, 150, 105, 0.25);
+}
+
+[data-theme="oat-amber"] {
+  --theme-mode: light;
+  --theme-bg: #FAF8F5;
+  --theme-sidebar: #FFFFFF;
+  --theme-card: #FFFFFF;
+  --theme-card-hover: #F5EFEB;
+  --theme-border: #EAE2D8;
+  --theme-border-subtle: #F4ECE4;
+  --theme-primary: #D97706;
+  --theme-primary-rgb: 217, 119, 6;
+  --theme-primary-hover: #B45309;
+  --theme-primary-fg: #FFFFFF;
+  --theme-accent: #EA580C;
+  --theme-accent-rgb: 234, 88, 12;
+  --theme-gradient-from: #D97706;
+  --theme-gradient-to: #F59E0B;
+  --theme-text: #1C1917;
+  --theme-text-muted: #78716C;
+  --selection-bg: rgba(217, 119, 6, 0.25);
+}
+
+[data-theme="lavender-light"] {
+  --theme-mode: light;
+  --theme-bg: #FBF8FF;
+  --theme-sidebar: #FFFFFF;
+  --theme-card: #FFFFFF;
+  --theme-card-hover: #F3ECFC;
+  --theme-border: #E9DDF8;
+  --theme-border-subtle: #F3EAFA;
+  --theme-primary: #7C3AED;
+  --theme-primary-rgb: 124, 58, 237;
+  --theme-primary-hover: #6D28D9;
+  --theme-primary-fg: #FFFFFF;
+  --theme-accent: #DB2777;
+  --theme-accent-rgb: 219, 39, 119;
+  --theme-gradient-from: #7C3AED;
+  --theme-gradient-to: #DB2777;
+  --theme-text: #1E1B4B;
+  --theme-text-muted: #6B7280;
+  --selection-bg: rgba(124, 58, 237, 0.25);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--theme-text);
+  background: var(--theme-bg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", Helvetica, Arial, sans-serif;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  background-color: var(--selection-bg);
+  color: inherit;
 }
 
 input, textarea, select {
@@ -21,16 +242,16 @@ input, textarea, select {
 
 /* Custom subtle scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--theme-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(75, 85, 99, 0.5);
+  background: rgba(148, 163, 184, 0.2);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(107, 114, 128, 0.8);
+  background: rgba(148, 163, 184, 0.4);
 }

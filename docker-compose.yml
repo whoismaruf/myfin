@@ -1,34 +1,10 @@
 services:
-  db:
-    image: postgres:18-alpine
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:-myfin}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-myfin_secure_password}
-      POSTGRES_DB: ${POSTGRES_DB:-myfin}
-    volumes:
-      - db_data:/var/lib/postgresql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-myfin}"]
-      interval: 4s
-      timeout: 4s
-      retries: 8
-
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: unless-stopped
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-myfin}:${POSTGRES_PASSWORD:-myfin_secure_password}@db:5432/${POSTGRES_DB:-myfin}?schema=public
-      NEXTAUTH_URL: http://localhost:3000
-      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-oNOjbm7/Hyaiho6g3paQkCJNcqcnYH926ZVh9FXlhSY=}
-      ENCRYPTION_KEY: ${ENCRYPTION_KEY:-c504893a29ecb2f09ff30e9d2d9a4d5aa25954895c3c79211241414453b31224}
+    # restart: unless-stopped
+    env_file:
+      - .env
     ports:
       - "3000:3000"
-
-volumes:
-  db_data:
